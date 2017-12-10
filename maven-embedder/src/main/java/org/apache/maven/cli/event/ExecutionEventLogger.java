@@ -283,9 +283,11 @@ public class ExecutionEventLogger
                 int pad = LINE_LENGTH - building.length() - progress.length();
 
                 infoMain( building + ( ( pad > 0 ) ? chars( ' ', pad ) : "" ) + progress );
-            } // else what's the point
+            }
 
-            infoLine( '-' );
+            // display packaging at end of line
+            String packaging = '[' + event.getProject().getPackaging() + ']';
+            infoMain( chars( '-', LINE_LENGTH - packaging.length() ) + packaging );
         }
     }
 
