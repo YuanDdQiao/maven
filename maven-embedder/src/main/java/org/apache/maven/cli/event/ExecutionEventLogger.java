@@ -263,8 +263,22 @@ public class ExecutionEventLogger
     {
         if ( logger.isInfoEnabled() )
         {
+            MavenProject project = event.getProject();
+
             logger.info( "" );
-            infoLine( '-' );
+
+            StringBuilder builder = new StringBuilder();
+            builder.append( "-< " )
+                .append( project.getGroupId() )
+                .append( ':' )
+                .append( project.getArtifactId() )
+                .append( ':' )
+                .append( project.getPackaging() )
+                .append( " >-" );
+            builder.insert( 0, chars( '-', Math.max( 0, LINE_LENGTH - builder.length() ) / 2 ) );
+            builder.append( chars( '-', Math.max( 0, LINE_LENGTH - builder.length() ) ) );
+
+            infoMain( builder.toString() );
 
             String building = "Building " + event.getProject().getName() + " " + event.getProject().getVersion();
 
@@ -287,9 +301,7 @@ public class ExecutionEventLogger
                 infoMain( building + ( ( pad > 0 ) ? chars( ' ', pad ) : "" ) + progress );
             }
 
-            // display packaging at end of line
-            String packaging = '[' + event.getProject().getPackaging() + ']';
-            infoMain( chars( '-', LINE_LENGTH - packaging.length() ) + packaging );
+            infoMain( chars( '-', LINE_LENGTH  ) );
         }
     }
 
