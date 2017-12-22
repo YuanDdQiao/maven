@@ -274,16 +274,16 @@ public class ExecutionEventLogger
                 .append( ':' )
                 .append( project.getPackaging() );
             
-            final String PREHEADER = "-< ";
-            final String POSTHEADER = " >-";
+            final String preHeader  = "-< ";
+            final String postHeader = " >-";
 
             String prefix =
                 chars( '-',
-                       Math.max( 0, ( LINE_LENGTH - projectKey.length() - PREHEADER.length() - POSTHEADER.length() )
+                       Math.max( 0, ( LINE_LENGTH - projectKey.length() - preHeader.length() - postHeader.length() )
                            / 2 ) )
-                    + PREHEADER;
-            String suffix = POSTHEADER
-                + chars( '-', Math.max( 0, LINE_LENGTH - projectKey.length() - prefix.length() - PREHEADER.length() ) );
+                    + preHeader;
+            String suffix = postHeader
+                + chars( '-', Math.max( 0, LINE_LENGTH - projectKey.length() - prefix.length() - preHeader.length() ) );
 
             logger.info( buffer().strong( prefix ).project( projectKey ).strong( suffix ).toString() );
 
