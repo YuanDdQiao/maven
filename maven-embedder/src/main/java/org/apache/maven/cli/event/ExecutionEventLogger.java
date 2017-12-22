@@ -267,18 +267,25 @@ public class ExecutionEventLogger
 
             logger.info( "" );
 
-            StringBuilder builder = new StringBuilder();
-            builder.append( "-< " )
-                .append( project.getGroupId() )
+            StringBuilder projectKey = new StringBuilder();
+            projectKey.append( project.getGroupId() )
                 .append( ':' )
                 .append( project.getArtifactId() )
                 .append( ':' )
-                .append( project.getPackaging() )
-                .append( " >-" );
-            builder.insert( 0, chars( '-', Math.max( 0, LINE_LENGTH - builder.length() ) / 2 ) );
-            builder.append( chars( '-', Math.max( 0, LINE_LENGTH - builder.length() ) ) );
+                .append( project.getPackaging() );
+            
+            final String PREHEADER = "-< ";
+            final String POSTHEADER = " >-";
 
-            infoMain( builder.toString() );
+            String prefix =
+                chars( '-',
+                       Math.max( 0, ( LINE_LENGTH - projectKey.length() - PREHEADER.length() - POSTHEADER.length() )
+                           / 2 ) )
+                    + PREHEADER;
+            String suffix = POSTHEADER
+                + chars( '-', Math.max( 0, LINE_LENGTH - projectKey.length() - prefix.length() - PREHEADER.length() ) );
+
+            logger.info( buffer().strong( prefix ).project( projectKey ).strong( suffix ).toString() );
 
             String building = "Building " + event.getProject().getName() + " " + event.getProject().getVersion();
 
