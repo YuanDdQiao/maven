@@ -71,9 +71,9 @@ public class ExecutionEventLoggerTest
         // verify
         InOrder inOrder = inOrder( logger );
         inOrder.verify( logger ).info( "" );
-        inOrder.verify( logger ).info( "----------------< org.apache.maven:maven-embedder:jar >-----------------" );
+        inOrder.verify( logger ).info( "------------------< org.apache.maven:maven-embedder >-------------------" );
         inOrder.verify( logger ).info( "Building Apache Maven Embedder 3.5.4-SNAPSHOT" );
-        inOrder.verify( logger ).info( "------------------------------------------------------------------------" );
+        inOrder.verify( logger ).info( "---------------------------------[jar]----------------------------------" );
     }
 
     @Test
@@ -86,7 +86,7 @@ public class ExecutionEventLoggerTest
 
         ExecutionEvent event = mock( ExecutionEvent.class );
         MavenProject project = mock( MavenProject.class );
-        when( project.getGroupId() ).thenReturn( "org.apache.maven.plugins" );
+        when( project.getGroupId() ).thenReturn( "org.apache.maven.plugins.overflow" );
         when( project.getArtifactId() ).thenReturn( "maven-project-info-reports-plugin" );
         when( project.getPackaging() ).thenReturn( "maven-plugin" );
         when( project.getName() ).thenReturn( "Apache Maven Project Info Reports Plugin" );
@@ -99,8 +99,8 @@ public class ExecutionEventLoggerTest
         // verify
         InOrder inOrder = inOrder( logger );
         inOrder.verify( logger ).info( "" );
-        inOrder.verify( logger ).info( "-< org.apache.maven.plugins:maven-project-info-reports-plugin:maven-plugin >-" );
+        inOrder.verify( logger ).info( "--< org.apache.maven.plugins.overflow:maven-project-info-reports-plugin >--" );
         inOrder.verify( logger ).info( "Building Apache Maven Project Info Reports Plugin 3.0.0-SNAPSHOT" );
-        inOrder.verify( logger ).info( "------------------------------------------------------------------------" );
+        inOrder.verify( logger ).info( "-----------------------------[maven-plugin]-----------------------------" );
     }
 }

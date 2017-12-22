@@ -267,26 +267,22 @@ public class ExecutionEventLogger
 
             logger.info( "" );
 
-            StringBuilder projectKey = new StringBuilder();
-            projectKey.append( project.getGroupId() )
-                .append( ':' )
-                .append( project.getArtifactId() )
-                .append( ':' )
-                .append( project.getPackaging() );
+            // -------< groupId:artifactId >-------
+            String projectKey = project.getGroupId() + ':' + project.getArtifactId();
             
-            final String preHeader  = "-< ";
-            final String postHeader = " >-";
+            final String preHeader  = "--< ";
+            final String postHeader = " >--";
 
-            String prefix =
-                chars( '-',
-                       Math.max( 0, ( LINE_LENGTH - projectKey.length() - preHeader.length() - postHeader.length() )
-                           / 2 ) )
-                    + preHeader;
+            final int headerLen = preHeader.length() + projectKey.length() + postHeader.length();
+
+            String prefix = chars( '-', Math.max( 0, ( LINE_LENGTH - headerLen ) / 2 ) ) + preHeader;
+
             String suffix = postHeader
-                + chars( '-', Math.max( 0, LINE_LENGTH - projectKey.length() - prefix.length() - preHeader.length() ) );
+                + chars( '-', Math.max( 0, LINE_LENGTH - headerLen - prefix.length() + preHeader.length() ) );
 
             logger.info( buffer().strong( prefix ).project( projectKey ).strong( suffix ).toString() );
 
+            // Building Project Name Version    [i/n]
             String building = "Building " + event.getProject().getName() + " " + event.getProject().getVersion();
 
             if ( totalProjects <= 1 )
@@ -308,7 +304,10 @@ public class ExecutionEventLogger
                 infoMain( building + ( ( pad > 0 ) ? chars( ' ', pad ) : "" ) + progress );
             }
 
-            infoMain( chars( '-', LINE_LENGTH  ) );
+            // ----------[packaging]----------
+            prefix = chars( '-', Math.max( 0, ( LINE_LENGTH - project.getPackaging().length() - 2 ) / 2 ) );
+            suffix = chars( '-', Math.max( 0, LINE_LENGTH - project.getPackaging().length() - 2 - prefix.length() ) );
+            infoMain( prefix + '[' + project.getPackaging() + ']' + suffix );
         }
     }
 
