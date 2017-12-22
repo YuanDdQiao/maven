@@ -304,10 +304,10 @@ public class ExecutionEventLogger
                 infoMain( building + ( ( pad > 0 ) ? chars( ' ', pad ) : "" ) + progress );
             }
 
-            // ----------[packaging]----------
-            prefix = chars( '-', Math.max( 0, ( LINE_LENGTH - project.getPackaging().length() - 2 ) / 2 ) );
-            suffix = chars( '-', Math.max( 0, LINE_LENGTH - project.getPackaging().length() - 2 - prefix.length() ) );
-            infoMain( prefix + '[' + project.getPackaging() + ']' + suffix );
+            // ----------[ packaging ]----------
+            prefix = chars( '-', Math.max( 0, ( LINE_LENGTH - project.getPackaging().length() - 4 ) / 2 ) );
+            suffix = chars( '-', Math.max( 0, LINE_LENGTH - project.getPackaging().length() - 4 - prefix.length() ) );
+            infoMain( prefix + "[ " + project.getPackaging() + " ]" + suffix );
         }
     }
 
